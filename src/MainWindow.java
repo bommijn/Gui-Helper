@@ -1,12 +1,17 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
 
 public class MainWindow extends JFrame {
     private TextPanel textPanel;
     private Toolbar toolbar;
     private FrameCPanel frameCPanel;
     private ContainerCPanel containerCPanel;
+    private FormFiller formListener;
+    private Printer printer;
 
 
 
@@ -16,38 +21,18 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         setLayout(new BorderLayout());
-
+        printer = new Printer();
+        formListener = new FormFiller();
         textPanel = new TextPanel();
         toolbar = new Toolbar();
         frameCPanel = new FrameCPanel();
         containerCPanel = new ContainerCPanel();
 
-        frameCPanel.addFormListener(new FormListener(){
-            public void formEventOccured(FormEvent event) {
-                String frameName = event.getFrameName();
-                String containerName = event.getContainerName();
+        frameCPanel.addFormListener(formListener);
+        containerCPanel.addFormListener(formListener);
 
-                frameCPanel.setFrameName(frameName);
-                frameCPanel.setContainerName(containerName);
-
-                containerCPanel.setContainerName(containerName);
-                containerCPanel.setFrameName(frameName);
-
-            }
-        });
-        frameCPanel.addPrintListener(new PrintListener() {
-            @Override
-            public void printAppend(PrintEvent e)
-            {
-                textPanel.appendText(e.getText());
-            }
-
-            @Override
-            public void printClear(PrintEvent e)
-            {
-                textPanel.clearAndSetText(e.getText());
-            }
-        });
+        frameCPanel.addPrintListener(printer);
+        containerCPanel.addPrintListener(printer);
 
         toolbar.setToolbarListener(new ToolbarListner() {
            //TODO implement methods here
@@ -67,7 +52,7 @@ public class MainWindow extends JFrame {
             {
                 remove(frameCPanel);
                 add(containerCPanel, BorderLayout.WEST);
-                
+
                 revalidate();
                 repaint();
             }
@@ -112,4 +97,38 @@ public class MainWindow extends JFrame {
 
 
     }
+
+    private class Printer implements PrintListener {
+
+
+        @Override
+        public void printAppend(PrintEvent e)
+        {
+            textPanel.appendText(e.getText());
+        }
+
+        @Override
+        public void printClear(PrintEvent e)
+        {
+            textPanel.clearAndSetText(e.getText());
+        }
+    }
+
+    private class FormFiller implements FormListener {
+
+        @Override
+        public void formEventOccured(FormEvent e)
+        {
+            String frameName = e.getFrameName();
+            String containerName = e.getContainerName();
+
+            frameCPanel.setFrameName(frameName);
+            frameCPanel.setContainerName(containerName);
+
+            containerCPanel.setContainerName(containerName);
+            containerCPanel.setFrameName(frameName);
+        }
+    }
 }
+
+

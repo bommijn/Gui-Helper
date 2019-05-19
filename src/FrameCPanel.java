@@ -19,7 +19,7 @@ public class FrameCPanel extends CreatorPanel {
         super.addFrameNameBut();
         super.addContainerInputBox();
         super.addOkButtonForInputFields();
-
+        addInfoLabel(10);
 
 
 

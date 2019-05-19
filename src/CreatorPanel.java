@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 public abstract class CreatorPanel extends JPanel {
 
     private String frameName, containerName;
+    private JLabel infoLabel;
     private FormListener formListener;
     private FormEvent event;
     private PrintListener printListener;
@@ -87,7 +88,7 @@ public abstract class CreatorPanel extends JPanel {
     }
 
 
-    public void addOkButtonForInputFields()
+    protected void addOkButtonForInputFields()
     {
         JButton getNamesBut = new JButton("Grab names");
 
@@ -104,6 +105,10 @@ public abstract class CreatorPanel extends JPanel {
                 if(getFormListener() != null)
                 {
                     getFormListener().formEventOccured(event);
+                    addTextToInfoLabel("names have been set<br/>" +
+                            "frame name: " + frameName + "<br/>"+
+                            "Container name: " + containerName);
+                    revalidate();
                 }
             }
         });
@@ -115,6 +120,29 @@ public abstract class CreatorPanel extends JPanel {
         gc.insets = new Insets(0,0,0,5);
         add(getNamesBut, gc);
     }
+
+    public void addInfoLabel(int gridY)
+    {
+        infoLabel = new JLabel("info: ");
+        Font font = new Font(Font.DIALOG,Font.BOLD,12);
+        infoLabel.setFont(font);
+        GridBagConstraints gc = new GridBagConstraints();
+        gc.weightx = 0.1;
+        gc.weighty = 2;
+        gc.gridx = 0;
+        gc.gridy = gridY;
+        gc.gridwidth =2;
+        gc.gridheight = 1;
+        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        gc.insets = new Insets(0,0,0,5);
+        add(infoLabel, gc);
+    }
+
+    public void addTextToInfoLabel(String text)
+    {
+        infoLabel.setText("<html>Info:  " + text + "</html>");
+    }
+
 
 
     public void printText(boolean append, String text)
@@ -135,21 +163,7 @@ public abstract class CreatorPanel extends JPanel {
     {
         if (getContainerName() == null)
         {
-            containerName = JOptionPane.showInputDialog(this,
-                    "Set container name first", null);
-            if (getFormListener() != null)
-            {
-                if (getFrameName() == null)
-                    updateForm("*Frame name not set*", getContainerName());
-
-                else
-                    updateForm(getFrameName(), getContainerName());
-
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(this,"Fatal Error contact Siemen", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            addTextToInfoLabel("Please set your container name");
         }
         else
         {
@@ -172,21 +186,7 @@ public abstract class CreatorPanel extends JPanel {
     {
         if (getFrameName() == null)
         {
-             frameName = JOptionPane.showInputDialog(this,
-                    "Set frameName first", null);
-            if (getFormListener() != null)
-            {
-                if (getContainerName() == null)
-                    updateForm(frameName, "");
-
-                else
-                    updateForm(frameName, getContainerName());
-            }
-
-            else
-            {
-                JOptionPane.showMessageDialog(this,"Fatal Error contact Siemen", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            addTextToInfoLabel("Please set your frame name.");
         }
         else
         {
@@ -201,33 +201,31 @@ public abstract class CreatorPanel extends JPanel {
     }
 
 
-
-
-
-    public void updateForm(String frameName, String containerName)
+    /**
+     * stuurt text naar het textfield waar de naam van het frameName en container nodig is.
+     * @param append
+     * @param text
+     */
+    public void printUsingFormAndCon(boolean append, String text)
     {
-        if (event == null)
+        if (getFrameName() == null || getContainerName() == null)
         {
-            event =  new FormEvent(this, frameName, containerName);
-            formListener.formEventOccured(event);
-        }
-        else if (!frameName.equals("") && !containerName.equals(""))
-        {
-            event.setContainerName(containerName);
-            event.setFrameName(frameName);
-            formListener.formEventOccured(event);
-        }
-        else if (!frameName.equals(""))
-        {
-            event.setContainerName(containerName);
-            formListener.formEventOccured(event);
+            addTextToInfoLabel("Please set your" +
+                    "<br/>" +
+                    "Container and frame name");
         }
         else
         {
-            event.setFrameName(frameName);
-            formListener.formEventOccured(event);
+            PrintEvent printEvent = new PrintEvent(this, text);
+            if (append)
+            {
+                getPrintListener().printAppend(printEvent);
+            }
+            else
+                getPrintListener().printClear(printEvent);
         }
     }
+
 
     public PrintListener getPrintListener()
     {
@@ -270,4 +268,31 @@ public abstract class CreatorPanel extends JPanel {
     {
         this.containerName = containerName;
     }
+
+
+
+     /* public void updateForm(String frameName, String containerName)
+    {
+        if (event == null)
+        {
+            event =  new FormEvent(this, frameName, containerName);
+            formListener.formEventOccured(event);
+        }
+        else if (!frameName.equals("") && !containerName.equals(""))
+        {
+            event.setContainerName(containerName);
+            event.setFrameName(frameName);
+            formListener.formEventOccured(event);
+        }
+        else if (!frameName.equals(""))
+        {
+            event.setContainerName(containerName);
+            formListener.formEventOccured(event);
+        }
+        else
+        {
+            event.setFrameName(frameName);
+            formListener.formEventOccured(event);
+        }
+    }*/
 }

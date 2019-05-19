@@ -9,7 +9,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.Toolkit;
 public class Gui {
 
-    private Model mod;
+
     private JPanel panels[];
     private JPanel frameCreatorPanel;
     private JFrame frame;
@@ -17,9 +17,9 @@ public class Gui {
     
     private Container con;
 
-    public Gui(Model mod)
+    public Gui()
     {
-        this.mod = mod;
+
         panels = new JPanel[5];
         makeGui();
     }
