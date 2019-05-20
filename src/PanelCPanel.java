@@ -15,8 +15,8 @@ public class PanelCPanel extends CreatorPanel  {
 
         addContainerInputBox();
         addFrameNameBut();
-        checkLabel = new JLabel("Kies waar je het paneel aan wil toevoegen" +
-                "Maximun 1 keuze !!" );
+        checkLabel = new JLabel("<html>Kies waar je het paneel aan wil toevoegen," +
+                " maximun 1 keuze. </html>" );
         //checkLabel.setPreferredSize(new Dimension(100,50));
 
         conCheck = new JCheckBox("Use container");
@@ -65,7 +65,7 @@ public class PanelCPanel extends CreatorPanel  {
             {
                 if (layoutList.getSelectedItem() == null || layoutList.getSelectedItem().equals(""))
                 {
-                    JOptionPane.showMessageDialog(layoutBut, "Layout instellen aub", "Error", JOptionPane.ERROR_MESSAGE);
+                   addTextToInfoLabel("Layout eerst instellen.");
                 }
                 else
                 {
@@ -116,7 +116,7 @@ public class PanelCPanel extends CreatorPanel  {
                             layout = "!!!!! ERROR !!!!";
 
                     }
-                    printUsingPanelName(true,getContainerName() + ".setLayout(" + layout + ");\n" );
+                    printUsingPanelName(true,getPanelName() + ".setLayout(" + layout + ");\n" );
                 }
             }
         });
@@ -161,6 +161,7 @@ public class PanelCPanel extends CreatorPanel  {
         gc.gridx = 0;
         gc.gridy = 4;
         gc.gridwidth = 2;
+        gc.fill = GridBagConstraints.HORIZONTAL;
         gc.anchor = GridBagConstraints.LINE_START;
         add(checkLabel, gc);
         /*
@@ -169,6 +170,7 @@ public class PanelCPanel extends CreatorPanel  {
         gc.gridwidth = 0;
         gc.gridx = 0;
         gc.gridy = 5;
+        gc.fill = GridBagConstraints.NONE;
         gc.anchor = GridBagConstraints.LINE_START;
         add(conCheck, gc);
 
@@ -207,12 +209,16 @@ public class PanelCPanel extends CreatorPanel  {
         gc.gridx = 0;
         gc.gridy = 8;
         gc.anchor = GridBagConstraints.LINE_START;
-        add(new JButton(new AbstractAction("Add to layout") {
+        add(new JButton(new AbstractAction("add to layout") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (conCheck.isEnabled())
-                    printUsingPanelAndCon(true, "");
 
+                if (conCheck.isSelected() && frameCheck.isSelected()) 
+                    addTextToInfoLabel("Bijden use Container en use frame zijn checked. Verwijder 1 en probeer opnieuw.");
+                else if (conCheck.isSelected())
+                    printUsingPanelAndCon(true, getContainerName() + ".add(" + getPanelName() + "); // kan nog moeten bijgewerkt worden afhankelijk van je layout\n");
+                else
+                    printUsingPanelAndFrame(true, getFrameName() + ".add(" + getPanelName() + ");// kan nog moeten bijgewerkt worden afhankelijk van je layout\n");
             }
         }), gc);
 
