@@ -10,6 +10,7 @@ public class MainWindow extends JFrame {
     private Toolbar toolbar;
     private FrameCPanel frameCPanel;
     private ContainerCPanel containerCPanel;
+    private PanelCPanel panelCPanel;
     private FormFiller formListener;
     private Printer printer;
 
@@ -27,12 +28,16 @@ public class MainWindow extends JFrame {
         toolbar = new Toolbar();
         frameCPanel = new FrameCPanel();
         containerCPanel = new ContainerCPanel();
+        panelCPanel = new PanelCPanel();
+
 
         frameCPanel.addFormListener(formListener);
         containerCPanel.addFormListener(formListener);
+        panelCPanel.addFormListener(formListener);
 
         frameCPanel.addPrintListener(printer);
         containerCPanel.addPrintListener(printer);
+        panelCPanel.addPrintListener(printer);
 
         toolbar.setToolbarListener(new ToolbarListner() {
            //TODO implement methods here
@@ -41,6 +46,7 @@ public class MainWindow extends JFrame {
             {
 
                 remove(containerCPanel);
+                remove(panelCPanel);
                 add(frameCPanel, BorderLayout.WEST);
 
                 revalidate();
@@ -51,6 +57,7 @@ public class MainWindow extends JFrame {
             public void showContainerMaker()
             {
                 remove(frameCPanel);
+                remove(panelCPanel);
                 add(containerCPanel, BorderLayout.WEST);
 
                 revalidate();
@@ -60,7 +67,12 @@ public class MainWindow extends JFrame {
             @Override
             public void showPanelMaker()
             {
+                remove(frameCPanel);
+                remove(containerCPanel);
+                add(panelCPanel, BorderLayout.WEST);
 
+                revalidate();
+                repaint();
             }
 
             @Override
@@ -121,12 +133,18 @@ public class MainWindow extends JFrame {
         {
             String frameName = e.getFrameName();
             String containerName = e.getContainerName();
+            String panelName = e.getPanelName();
 
             frameCPanel.setFrameName(frameName);
             frameCPanel.setContainerName(containerName);
 
             containerCPanel.setContainerName(containerName);
             containerCPanel.setFrameName(frameName);
+            containerCPanel.setPanelName(panelName);
+
+            panelCPanel.setContainerName(containerName);
+            panelCPanel.setFrameName(frameName);
+            panelCPanel.setPanelName(panelName);
         }
     }
 }
