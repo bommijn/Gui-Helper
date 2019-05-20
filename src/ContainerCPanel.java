@@ -89,7 +89,7 @@ public class ContainerCPanel extends CreatorPanel {
         });
 
         createButtons();
-        addInfoLabel(5);
+        addInfoLabel(8);
 
     }
 
@@ -110,7 +110,7 @@ public class ContainerCPanel extends CreatorPanel {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                printUsingFormAndCon(false, "Container " + getContainerName() + " = " + getFrameName() + ".getContentPane();\n");
+                printText(false, "Container " + getContainerName() + " = " + getFrameName() + ".getContentPane();\n");
             }
         }), gc);
 
@@ -134,6 +134,9 @@ public class ContainerCPanel extends CreatorPanel {
         /*
         6de rij
          */
+
+
+
 
 
     }

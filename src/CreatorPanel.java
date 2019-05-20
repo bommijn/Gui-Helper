@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public abstract class CreatorPanel extends JPanel {
 
-    private String frameName, containerName;
+    private String frameName, containerName, panelName;
     private JLabel infoLabel;
     private FormListener formListener;
     private FormEvent event;
@@ -18,6 +18,7 @@ public abstract class CreatorPanel extends JPanel {
     {
         this.frameName = null;
         this.containerName = null;
+        this.panelName = null;
 
 
         Dimension dim = getPreferredSize();
@@ -131,6 +132,7 @@ public abstract class CreatorPanel extends JPanel {
         gc.weighty = 2;
         gc.gridx = 0;
         gc.gridy = gridY;
+        gc.fill = GridBagConstraints.HORIZONTAL;
         gc.gridwidth =2;
         gc.gridheight = 1;
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -142,6 +144,7 @@ public abstract class CreatorPanel extends JPanel {
     {
         infoLabel.setText("<html>Info:  " + text + "</html>");
     }
+
 
 
 
@@ -161,9 +164,27 @@ public abstract class CreatorPanel extends JPanel {
      */
     public void printUsingContainerName(boolean append, String text)
     {
-        if (getContainerName() == null)
+        if (getContainerName() == null || getContainerName().equals(""))
         {
             addTextToInfoLabel("Please set your container name");
+        }
+        else
+        {
+            PrintEvent printEvent = new PrintEvent(this, text);
+            if (append)
+            {
+                getPrintListener().printAppend(printEvent);
+            }
+            else
+                getPrintListener().printClear(printEvent);
+        }
+    }
+
+    public void printUsingPanelName(boolean append, String text)
+    {
+        if (getPanelName() == null || getPanelName().equals(""))
+        {
+            addTextToInfoLabel("Please set your panel name");
         }
         else
         {
@@ -182,9 +203,9 @@ public abstract class CreatorPanel extends JPanel {
      * @param append
      * @param text
      */
-    public void printUsingFormName(boolean append, String text)
+    public void printUsingFrameName(boolean append, String text)
     {
-        if (getFrameName() == null)
+        if (getFrameName() == null || getFrameName().equals(""))
         {
             addTextToInfoLabel("Please set your frame name.");
         }
@@ -200,19 +221,60 @@ public abstract class CreatorPanel extends JPanel {
         }
     }
 
+    public void printUsingPanelAndFrame(boolean append, String text)
+    {
+        if (getFrameName() == null || getFrameName().equals("")
+            || getPanelName() == null || getPanelName().equals(""))
+        {
+            addTextToInfoLabel("Please set your frame name.");
+        }
+        else
+        {
+            PrintEvent printEvent = new PrintEvent(this, text);
+            if (append)
+            {
+                getPrintListener().printAppend(printEvent);
+            }
+            else
+                getPrintListener().printClear(printEvent);
+        }
+    }
+
 
     /**
      * stuurt text naar het textfield waar de naam van het frameName en container nodig is.
      * @param append
      * @param text
      */
-    public void printUsingFormAndCon(boolean append, String text)
+    public void printUsingFrameAndCon(boolean append, String text)
     {
-        if (getFrameName() == null || getContainerName() == null)
+        if (getFrameName() == null || getContainerName() == null ||
+                getFrameName().equals("") || getContainerName().equals(""))
         {
             addTextToInfoLabel("Please set your" +
                     "<br/>" +
-                    "Container and frame name");
+                    "Container and/or frame name");
+        }
+        else
+        {
+            PrintEvent printEvent = new PrintEvent(this, text);
+            if (append)
+            {
+                getPrintListener().printAppend(printEvent);
+            }
+            else
+                getPrintListener().printClear(printEvent);
+        }
+    }
+
+    public void printUsingPanelAndCon(boolean append, String text)
+    {
+        if (getPanelName() == null || getContainerName() == null ||
+                getPanelName().equals("") || getContainerName().equals(""))
+        {
+            addTextToInfoLabel("Please set your" +
+                    "<br/>" +
+                    "Container and/or panel name");
         }
         else
         {
@@ -269,9 +331,25 @@ public abstract class CreatorPanel extends JPanel {
         this.containerName = containerName;
     }
 
+    public String getFrameNameFronInputField()
+    {
+        return nameField.getText();
+    }
 
+    public String getContainerNameFronInputField()
+    {
+        return conNameField.getText();
+    }
 
-     /* public void updateForm(String frameName, String containerName)
+    public String getPanelName() {
+        return panelName;
+    }
+
+    public void setPanelName(String panelName) {
+        this.panelName = panelName;
+    }
+
+    /* public void updateForm(String frameName, String containerName)
     {
         if (event == null)
         {

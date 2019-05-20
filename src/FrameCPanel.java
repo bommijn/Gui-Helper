@@ -1,7 +1,4 @@
-import com.sun.org.apache.xml.internal.security.utils.JDKXPathAPI;
-
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,7 +43,7 @@ public class FrameCPanel extends CreatorPanel {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-               printUsingFormName(false,"JFrame " + getFrameName() +" = new JFrame(*titleHere*);\n");
+               printUsingFrameName(false,"JFrame " + getFrameName() +" = new JFrame(*titleHere*);\n");
             }
         });
 
@@ -58,7 +55,7 @@ public class FrameCPanel extends CreatorPanel {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                printUsingFormName(true,getFrameName() + ".addWindowListener(new WindowAdapter()\n" +
+                printUsingFrameName(true,getFrameName() + ".addWindowListener(new WindowAdapter()\n" +
                         "            {\n" +
                         "                public void windowClosing(WindowEvent e)\n" +
                         "                {\n" +
@@ -130,7 +127,7 @@ public class FrameCPanel extends CreatorPanel {
                             layout = "!!!!! ERROR !!!!";
 
                     }
-                    printUsingFormName(true,getFrameName() + ".setLayout(" + layout + ");\n" );
+                    printUsingFrameName(true,getFrameName() + ".setLayout(" + layout + ");\n" );
                 }
             }
         });
@@ -143,7 +140,7 @@ public class FrameCPanel extends CreatorPanel {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                printUsingFormName(true, getFrameName() + ".pack();");
+                printUsingFrameName(true, getFrameName() + ".pack();");
             }
         });
 
@@ -200,7 +197,7 @@ public class FrameCPanel extends CreatorPanel {
         gc.gridwidth = 1;
         add(new JButton(new AbstractAction("4. Pack") {
             public void actionPerformed(ActionEvent e) {
-                printUsingFormName(true, getFrameName() + ".pack();\n");
+                printUsingFrameName(true, getFrameName() + ".pack();\n");
             }
         }), gc);
 
@@ -212,7 +209,7 @@ public class FrameCPanel extends CreatorPanel {
         gc.gridy = 7;
         add(new JButton(new AbstractAction("5. set visible") {
             public void actionPerformed(ActionEvent e) {
-                printUsingFormName(true, getFrameName() + ".setVisible(true);\n");
+                printUsingFrameName(true, getFrameName() + ".setVisible(true);\n");
             }
         }), gc);
 

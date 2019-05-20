@@ -213,7 +213,7 @@ public class PanelCPanel extends CreatorPanel  {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (conCheck.isSelected() && frameCheck.isSelected()) 
+                if (conCheck.isSelected() && frameCheck.isSelected())
                     addTextToInfoLabel("Bijden use Container en use frame zijn checked. Verwijder 1 en probeer opnieuw.");
                 else if (conCheck.isSelected())
                     printUsingPanelAndCon(true, getContainerName() + ".add(" + getPanelName() + "); // kan nog moeten bijgewerkt worden afhankelijk van je layout\n");
