@@ -18,7 +18,6 @@ public class Toolbar extends JToolBar {
         jPanelBut = new JButton("JPanel");
         jButtonBut = new JButton("JButton");
         jtextFieldBut = new JButton("JTextField");
-
         jLabelBut = new JButton("JLabel");
 
 
@@ -89,7 +88,6 @@ public class Toolbar extends JToolBar {
         add(jPanelBut);
         add(jButtonBut);
         add(jtextFieldBut);
-
         add(jLabelBut);
 
         setVisible(true);

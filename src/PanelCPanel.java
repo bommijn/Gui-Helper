@@ -2,22 +2,30 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 public class PanelCPanel extends CreatorPanel  {
     private JLabel checkLabel;
-    private JTextField conNameField, panelNameField;
+    private JTextField panelNameField, widthField, heightField;
     private JButton okButton, layoutBut;
     private JCheckBox conCheck, frameCheck;
     private JComboBox<String> layoutList;
 
-    public PanelCPanel() {
-        super("Panel creator");
+    public PanelCPanel(FormListener formListener, PrintListener printListener) {
+        super("Panel creator", formListener, printListener);
 
-        addContainerInputBox();
-        addFrameNameBut();
+        addContainerInputBox(0);
+        addFrameNameBut(1);
+
         checkLabel = new JLabel("<html>Kies waar je het paneel aan wil toevoegen," +
                 " maximun 1 keuze. </html>" );
         //checkLabel.setPreferredSize(new Dimension(100,50));
+        widthField = new JTextField(5);
+        heightField = new JTextField(5);
+
+        heightField.setPreferredSize(new Dimension(95,20));
+        widthField.setPreferredSize(new Dimension(95,20));
 
         conCheck = new JCheckBox("Use container");
         frameCheck = new JCheckBox("Use frame");
@@ -219,6 +227,55 @@ public class PanelCPanel extends CreatorPanel  {
                     printUsingPanelAndCon(true, getContainerName() + ".add(" + getPanelName() + "); // kan nog moeten bijgewerkt worden afhankelijk van je layout\n");
                 else
                     printUsingPanelAndFrame(true, getFrameName() + ".add(" + getPanelName() + ");// kan nog moeten bijgewerkt worden afhankelijk van je layout\n");
+            }
+        }), gc);
+
+
+
+        gc.gridx = 0;
+        gc.gridy = 9;
+        gc.gridwidth = 1;
+        gc.fill = GridBagConstraints.HORIZONTAL;
+        gc.anchor = GridBagConstraints.LINE_START;
+        add(new JLabel("Panel Height:"), gc);
+
+        gc.gridx = 1;
+        gc.gridy = 9;
+        gc.anchor = GridBagConstraints.LINE_END;
+        add(new JLabel("Panel Width:"), gc);
+
+        gc.gridx = 0;
+        gc.gridy = 10;
+        gc.gridwidth = 1;
+        gc.fill = GridBagConstraints.HORIZONTAL;
+        gc.anchor = GridBagConstraints.LINE_START;
+        add(heightField, gc);
+
+        gc.gridx = 1;
+        gc.gridy = 10;
+        gc.anchor = GridBagConstraints.LINE_END;
+        add(widthField, gc);
+
+        gc.gridx = 0;
+        gc.gridy = 11;
+        gc.weighty = 5;
+        gc.gridwidth = 2;
+        gc.fill = GridBagConstraints.NONE;
+        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        add(new JButton(new AbstractAction("Set preferred size") {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                try
+                {
+                    int height = new Integer(heightField.getText());
+                    int width = new Integer(widthField.getText());
+                    printUsingPanelName(true, getPanelName() + ".setPreferredSize(new Dimension("+width + "," + height + "));\n");
+
+                } catch (NumberFormatException n)
+                {
+                    addTextToInfoLabel("Panel height or width can only accept numbers !! It also cant be empty, try again");
+                }
             }
         }), gc);
 

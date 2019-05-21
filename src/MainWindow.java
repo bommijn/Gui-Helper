@@ -11,6 +11,8 @@ public class MainWindow extends JFrame {
     private FrameCPanel frameCPanel;
     private ContainerCPanel containerCPanel;
     private PanelCPanel panelCPanel;
+    private ButtonCPanel buttonCPanel;
+    private  TextFieldCPanel textFieldCPanel;
     private FormFiller formListener;
     private Printer printer;
 
@@ -26,18 +28,11 @@ public class MainWindow extends JFrame {
         formListener = new FormFiller();
         textPanel = new TextPanel();
         toolbar = new Toolbar();
-        frameCPanel = new FrameCPanel();
-        containerCPanel = new ContainerCPanel();
-        panelCPanel = new PanelCPanel();
-
-
-        frameCPanel.addFormListener(formListener);
-        containerCPanel.addFormListener(formListener);
-        panelCPanel.addFormListener(formListener);
-
-        frameCPanel.addPrintListener(printer);
-        containerCPanel.addPrintListener(printer);
-        panelCPanel.addPrintListener(printer);
+        frameCPanel = new FrameCPanel(formListener,printer);
+        containerCPanel = new ContainerCPanel(formListener,printer);
+        panelCPanel = new PanelCPanel(formListener, printer);
+        buttonCPanel = new ButtonCPanel(formListener,printer);
+        textFieldCPanel = new TextFieldCPanel(formListener, printer);
 
         toolbar.setToolbarListener(new ToolbarListner() {
            //TODO implement methods here
@@ -47,6 +42,7 @@ public class MainWindow extends JFrame {
 
                 remove(containerCPanel);
                 remove(panelCPanel);
+                remove(textFieldCPanel);
                 add(frameCPanel, BorderLayout.WEST);
 
                 revalidate();
@@ -58,8 +54,10 @@ public class MainWindow extends JFrame {
             {
                 remove(frameCPanel);
                 remove(panelCPanel);
-                add(containerCPanel, BorderLayout.WEST);
+                remove(textFieldCPanel);
+                remove(buttonCPanel);
 
+                add(containerCPanel, BorderLayout.WEST);
                 revalidate();
                 repaint();
             }
@@ -69,8 +67,10 @@ public class MainWindow extends JFrame {
             {
                 remove(frameCPanel);
                 remove(containerCPanel);
-                add(panelCPanel, BorderLayout.WEST);
+                remove(textFieldCPanel);
+                remove(buttonCPanel);
 
+                add(panelCPanel, BorderLayout.WEST);
                 revalidate();
                 repaint();
             }
@@ -78,13 +78,28 @@ public class MainWindow extends JFrame {
             @Override
             public void showButtonMaker()
             {
+                remove(frameCPanel);
+                remove(panelCPanel);
+                remove(textFieldCPanel);
+                remove(containerCPanel);
+
+                add(buttonCPanel, BorderLayout.WEST);
+                revalidate();
+                repaint();
 
             }
 
             @Override
             public void showTextFieldMaker()
             {
+                remove(frameCPanel);
+                remove(panelCPanel);
+                remove(textFieldCPanel);
+                remove(buttonCPanel);
 
+                add(textFieldCPanel, BorderLayout.WEST);
+                revalidate();
+                repaint();
             }
 
             @Override
@@ -93,11 +108,7 @@ public class MainWindow extends JFrame {
 
             }
 
-            @Override
-            public void showTextAreaMaker()
-            {
 
-            }
         });
 
         add(textPanel, BorderLayout.CENTER);

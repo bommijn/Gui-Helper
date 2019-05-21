@@ -6,12 +6,12 @@ import java.awt.event.ActionListener;
 public class ContainerCPanel extends CreatorPanel {
     private JComboBox<String> layoutList;
     private JButton layoutBut;
-    public ContainerCPanel()
+    public ContainerCPanel(FormListener formListener, PrintListener printListener)
     {
-        super("Container Creator");
-        addFrameNameBut();
-        addContainerInputBox();
-        addOkButtonForInputFields();
+        super("Container Creator", formListener, printListener);
+        addFrameNameBut(0);
+        addContainerInputBox(1);
+        addOkButtonForInputFields(2);
 
         layoutList = new JComboBox<>();
         DefaultComboBoxModel<String> defaultLayoutModel = new DefaultComboBoxModel<>();
@@ -135,7 +135,19 @@ public class ContainerCPanel extends CreatorPanel {
         6de rij
          */
 
-
+        gc.weightx = 0.1;
+        gc.weighty = 0.3;
+        gc.gridy = 5;
+        gc.gridx = 0;
+        gc.gridwidth = 2;
+        add(new JButton(new AbstractAction("Add object to this") {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                printUsingContainerName(true, getContainerName() + ".add(objName); // vervang objName door hetgene dat moet \n" +
+                      "//toegevoegd worden. "  );
+            }
+        }), gc);
 
 
 

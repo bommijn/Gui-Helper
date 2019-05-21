@@ -8,14 +8,14 @@ public class FrameCPanel extends CreatorPanel {
     private JButton layoutBut, makeFormBut, closeEventBut, packBut;
 
 
-    public FrameCPanel()
+    public FrameCPanel(FormListener formListener, PrintListener printListener)
     {
-        super("Frame Creator");
+        super("Frame Creator",formListener, printListener);
 
 
-        super.addFrameNameBut();
-        super.addContainerInputBox();
-        super.addOkButtonForInputFields();
+        super.addFrameNameBut(0);
+        super.addContainerInputBox(1);
+        super.addOkButtonForInputFields(2);
         addInfoLabel(10);
 
 
