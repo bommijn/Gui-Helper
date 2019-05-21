@@ -14,11 +14,14 @@ public abstract class CreatorPanel extends JPanel {
     private PrintListener printListener;
     private JTextField conNameField, nameField;
 
-    public CreatorPanel(String title)
+    public CreatorPanel(String title, FormListener formListener, PrintListener printListener)
     {
         this.frameName = null;
         this.containerName = null;
         this.panelName = null;
+        this.formListener = formListener;
+        this.printListener = printListener;
+
 
 
         Dimension dim = getPreferredSize();
@@ -34,7 +37,7 @@ public abstract class CreatorPanel extends JPanel {
 
 
 
-    public void addFrameNameBut()
+    public void addFrameNameBut(int row)
     {
         nameField = new JTextField(10);
         JLabel nameLabel = new JLabel("Frame name:");
@@ -48,21 +51,21 @@ public abstract class CreatorPanel extends JPanel {
         First row
          */
         gc.gridx = 0;
-        gc.gridy = 0;
+        gc.gridy = row;
         gc.fill = GridBagConstraints.NONE;
         gc.anchor = GridBagConstraints.LINE_END;
         gc.insets = new Insets(0,0,0,10);
         add(nameLabel, gc);
 
         gc.gridx = 1;
-        gc.gridy = 0;
+        gc.gridy = row;
         gc.anchor = GridBagConstraints.LINE_START;
         gc.insets = new Insets(0,0,0,0);
         add(nameField, gc);
 
     }
 
-    public void addContainerInputBox()
+    public void addContainerInputBox(int row)
     {
 
         conNameField = new JTextField(10);
@@ -76,20 +79,20 @@ public abstract class CreatorPanel extends JPanel {
         gc.weightx = 0.1;
 
         gc.gridx = 0;
-        gc.gridy = 1;
+        gc.gridy = row;
         gc.anchor = GridBagConstraints.LINE_END;
         gc.insets = new Insets(0,0,0,5);
         add(conLabel, gc);
 
         gc.gridx = 1;
-        gc.gridy = 1;
+        gc.gridy = row;
         gc.anchor = GridBagConstraints.LINE_START;
         gc.insets = new Insets(0,0,0,0);
         add(conNameField, gc);
     }
 
 
-    protected void addOkButtonForInputFields()
+    protected void addOkButtonForInputFields(int row)
     {
         JButton getNamesBut = new JButton("Grab names");
 
@@ -116,7 +119,7 @@ public abstract class CreatorPanel extends JPanel {
         gc.weightx = 0.1;
         gc.weighty = 0.2;
         gc.gridx = 1;
-        gc.gridy = 2;
+        gc.gridy = row;
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
         gc.insets = new Insets(0,0,0,5);
         add(getNamesBut, gc);
