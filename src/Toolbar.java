@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 public class Toolbar extends JToolBar {
 
     private ToolbarListner toolbarListner;
-    private JButton jFrameBut, jPanelBut, jButtonBut, jtextFieldBut, jLabelBut, containerBut;
+    private JButton jFrameBut, jPanelBut, jButtonBut, jtextFieldBut, jLabelBut, containerBut, utilBut;
 
     public Toolbar()
     {
@@ -19,6 +19,7 @@ public class Toolbar extends JToolBar {
         jButtonBut = new JButton("JButton");
         jtextFieldBut = new JButton("JTextField");
         jLabelBut = new JButton("JLabel");
+        utilBut = new JButton("Utility's");
 
 
         jFrameBut.addActionListener(new ActionListener() {
@@ -82,6 +83,16 @@ public class Toolbar extends JToolBar {
                 }
             }
         });
+        utilBut.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                if (toolbarListner != null)
+                {
+                    toolbarListner.showUtilPanel();
+                }
+            }
+        });
 
         add(jFrameBut);
         add(containerBut);
@@ -89,7 +100,7 @@ public class Toolbar extends JToolBar {
         add(jButtonBut);
         add(jtextFieldBut);
         add(jLabelBut);
-
+        add(utilBut);
         setVisible(true);
     }
 

@@ -15,8 +15,8 @@ public class PanelCPanel extends CreatorPanel  {
     public PanelCPanel(FormListener formListener, PrintListener printListener) {
         super("Panel creator", formListener, printListener);
 
-        addContainerInputBox(0);
-        addFrameNameBut(1);
+        addContainerInputBox(1);
+        addFrameNameBut(0);
 
         checkLabel = new JLabel("<html>Kies waar je het paneel aan wil toevoegen," +
                 " maximun 1 keuze. </html>" );
@@ -94,7 +94,7 @@ public class PanelCPanel extends CreatorPanel  {
                     switch (choseLayout)
                     {
                         case "BoxLayout":
-                            layout = "new BoxLayout()";
+                            layout = "new BoxLayout("+ getPanelName() +", **) // **add orientation in constructor";
                             break;
 
                         case "BorderLayout":
@@ -129,7 +129,20 @@ public class PanelCPanel extends CreatorPanel  {
             }
         });
         makeButtons();
-        //TODO set infoBox
+
+        addHelpButton(0,19,7,"Panel creator:\n\n" +
+                "USE CONTAINER & USE FRAME :\n" +
+                "deze knoppen staan voor of je het paneel aan de container wilt toevoegen of aan het frame (moest je geen container gebruiken)\n" +
+                "Er mag maar 1 van deze knoppen tegelijk aangeduid worden anders weet hij niet wat kiezen, deze knoppen schieten in werking als je\n" +
+                "op de add to layout button clickt\n\n" +
+                "SET LAYOUT :\n" +
+                "Stelt de layout in\n\n" +
+                "ADD TO LAYOUT:\n" +
+                "Voegt het paneel toe aan uw container of frame, (manueel aan een ander paneel toevoegen is ook een optie\n" +
+                "het moet niet perse een container of frame zijn)\n" +
+                "SET PREFERED SIZE : \n" +
+                "voegt de set prefered size methode toe met de parameters meegegeven in de fields.\n" +
+                "Deze methode word soms genegeerd door de layoutmanager.\n\n");
         addInfoLabel(20);
 
     }
@@ -258,7 +271,6 @@ public class PanelCPanel extends CreatorPanel  {
 
         gc.gridx = 0;
         gc.gridy = 11;
-        gc.weighty = 5;
         gc.gridwidth = 2;
         gc.fill = GridBagConstraints.NONE;
         gc.anchor = GridBagConstraints.FIRST_LINE_START;

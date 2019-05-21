@@ -13,6 +13,14 @@ public class ButtonCPanel extends CreatorPanel{
         buttonName = null;
 
         makeButtons();
+        addHelpButton(0,19,8,"Button creator:\n\n" +
+                "NEW BUTTON : \n" +
+                "Geeft de syntax voor een nieuwe knop\n\n" +
+                "ADD ACTIONLISTENER : \n" +
+                "voegt een actionlistener toe aan de knop (methode voor als je erop clickt)\n\n" +
+                "ADD TO LAYOUT :\n" +
+                "Voegt de knop toe aan de layout, naam van paneel/con/frame/whatever, moet je zelf nog ingeven\n\n" +
+                "");
         addInfoLabel(20);
     }
 
@@ -69,7 +77,7 @@ public class ButtonCPanel extends CreatorPanel{
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                printUsingButonName(true, "JButton " + buttonName + " = new JButton(*button title here*)");
+                printUsingButonName(true, "JButton " + buttonName + " = new JButton(*button title here*);\n");
             }
         }), gc);
 
@@ -101,8 +109,7 @@ public class ButtonCPanel extends CreatorPanel{
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                printUsingButonName(true, "*nameObjectWaarHetAanToegevoegdMoetWorden*.add(" + buttonName + "); //vv\n" +
-                        "//Kan zijn dat er achter add(" + buttonName + ", *hier*);nog iets moet komen voor de layout.");
+                printUsingButonName(true, "*frame/panel/con name*.add(" + buttonName + ");\n");
             }
         }), gc);
 

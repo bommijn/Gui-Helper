@@ -16,6 +16,9 @@ public class TextPanel extends JPanel {
 
         JPanel butnPanel = new JPanel(new BorderLayout());
 
+        textArea.setText("INFO : \n" +
+                "als je ergens ** tegenkomt moet daar zelf nog iets ingevuld worden.\n" +
+                "Container name en frame name worden opgeslagen als je van panel veranderd.  \n");
 
         copyButton.addActionListener(new ActionListener() {
             @Override

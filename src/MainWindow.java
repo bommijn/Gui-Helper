@@ -12,7 +12,9 @@ public class MainWindow extends JFrame {
     private ContainerCPanel containerCPanel;
     private PanelCPanel panelCPanel;
     private ButtonCPanel buttonCPanel;
-    private  TextFieldCPanel textFieldCPanel;
+    private TextFieldCPanel textFieldCPanel;
+    private LabelCPanel labelCPanel;
+    private UtilCPanel utilCPanel;
     private FormFiller formListener;
     private Printer printer;
 
@@ -33,6 +35,8 @@ public class MainWindow extends JFrame {
         panelCPanel = new PanelCPanel(formListener, printer);
         buttonCPanel = new ButtonCPanel(formListener,printer);
         textFieldCPanel = new TextFieldCPanel(formListener, printer);
+        labelCPanel = new LabelCPanel(formListener, printer);
+        utilCPanel = new UtilCPanel(formListener, printer);
 
         toolbar.setToolbarListener(new ToolbarListner() {
            //TODO implement methods here
@@ -43,8 +47,9 @@ public class MainWindow extends JFrame {
                 remove(containerCPanel);
                 remove(panelCPanel);
                 remove(textFieldCPanel);
-                add(frameCPanel, BorderLayout.WEST);
+                remove(labelCPanel);
 
+                add(frameCPanel, BorderLayout.WEST);
                 revalidate();
                 repaint();
             }
@@ -56,6 +61,8 @@ public class MainWindow extends JFrame {
                 remove(panelCPanel);
                 remove(textFieldCPanel);
                 remove(buttonCPanel);
+                remove(labelCPanel);
+                remove(utilCPanel);
 
                 add(containerCPanel, BorderLayout.WEST);
                 revalidate();
@@ -69,6 +76,8 @@ public class MainWindow extends JFrame {
                 remove(containerCPanel);
                 remove(textFieldCPanel);
                 remove(buttonCPanel);
+                remove(labelCPanel);
+                remove(utilCPanel);
 
                 add(panelCPanel, BorderLayout.WEST);
                 revalidate();
@@ -82,6 +91,8 @@ public class MainWindow extends JFrame {
                 remove(panelCPanel);
                 remove(textFieldCPanel);
                 remove(containerCPanel);
+                remove(labelCPanel);
+                remove(utilCPanel);
 
                 add(buttonCPanel, BorderLayout.WEST);
                 revalidate();
@@ -96,6 +107,8 @@ public class MainWindow extends JFrame {
                 remove(panelCPanel);
                 remove(textFieldCPanel);
                 remove(buttonCPanel);
+                remove(labelCPanel);
+                remove(utilCPanel);
 
                 add(textFieldCPanel, BorderLayout.WEST);
                 revalidate();
@@ -105,7 +118,30 @@ public class MainWindow extends JFrame {
             @Override
             public void showLabelMaker()
             {
+                remove(frameCPanel);
+                remove(panelCPanel);
+                remove(textFieldCPanel);
+                remove(buttonCPanel);
+                remove(textFieldCPanel);
+                remove(utilCPanel);
 
+                add(labelCPanel, BorderLayout.WEST);
+                revalidate();
+                repaint();
+            }
+            @Override
+            public void showUtilPanel()
+            {
+                remove(frameCPanel);
+                remove(panelCPanel);
+                remove(textFieldCPanel);
+                remove(buttonCPanel);
+                remove(textFieldCPanel);
+                remove(labelCPanel);
+
+                add(utilCPanel, BorderLayout.WEST);
+                revalidate();
+                repaint();
             }
 
 

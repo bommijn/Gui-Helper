@@ -15,6 +15,20 @@ public class TextFieldCPanel extends CreatorPanel {
         widthField = new JTextField();
 
         makeButtons();
+        addHelpButton(0,19,7, "Text field creator: \n\n" +
+                "NEW TEXTFIELD : \n" +
+                "Syntax voor een nieuw textField. Je kan in de JTextField(*hier*)\n" +
+                "nog een zin meegeven of een getal 5 = plaats voor 5 letters\n\n" +
+                "SET PREFERED SIZE : \n" +
+                "zets de prefered size (word soms genegeerd door de layout\n\n" +
+                "RETRIEVE TEXT: \n" +
+                "Deze methode geeft een string terug als je wil weten wat de gebruiker heeft ingegeven\n" +
+                "roep je deze methode op.\n" +
+                "\n\n Beetje info van java docs : \n" +
+                "JTextField is a lightweight component that allows the editing of a single line of text. \n" +
+                "For information on and examples of using text fields, see How to Use Text Fields in The Java Tutorial.\n" +
+                "how to use textfields link :\n" +
+                "https://docs.oracle.com/javase/tutorial/uiswing/components/textfield.html");
         addInfoLabel(20);
     }
 
@@ -72,8 +86,7 @@ public class TextFieldCPanel extends CreatorPanel {
             public void actionPerformed(ActionEvent e)
             {
                 printUsingTextFieldName(true, "JTextField " + textFieldName
-                + " = new JTextField(); \n" +
-                        "// optionally can add text in the JTextField(*here*) or a number for the width");
+                + " = new JTextField(); \n");
             }
         }), gc );
 
@@ -135,6 +148,7 @@ public class TextFieldCPanel extends CreatorPanel {
          */
         gc.gridx = 0;
         gc.gridy++;
+
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
         add(new JButton(new AbstractAction("retrieve text") {
             @Override

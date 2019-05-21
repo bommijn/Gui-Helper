@@ -53,7 +53,7 @@ public class ContainerCPanel extends CreatorPanel {
                     switch (choseLayout)
                     {
                         case "BoxLayout":
-                            layout = "new BoxLayout()";
+                            layout = "new BoxLayout("+getContainerName()+", **) // **add orientation in constructor";
                             break;
 
                         case "BorderLayout":
@@ -89,7 +89,17 @@ public class ContainerCPanel extends CreatorPanel {
         });
 
         createButtons();
-        addInfoLabel(8);
+        addHelpButton(0,12,8,"Container creator:\n\n" +
+                "GRAB NAMES:\n" +
+                "Deze knop grabbed en set de names die ingegeven zijn in de velden boven de knop.\n\n" +
+                "CREATE AND SET : \n" +
+                "deze knop gaat de container constructen en automatish linken aan het frame\n" +
+                "om goed te werken moet de framename correct zijn ingesteld.\n\n" +
+                        "SET LAYOUT :\n" +
+                        "stelt de layout in met de gekozen layout.\n\n" +
+                        "ADD OBJECT TO THIS : \n" +
+                        "Dit gaat de .add op de container gebruiken. Het item dat moet toegevoegd worden moet je zelf typen.");
+        addInfoLabel(20);
 
     }
 
@@ -110,7 +120,7 @@ public class ContainerCPanel extends CreatorPanel {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                printText(false, "Container " + getContainerName() + " = " + getFrameName() + ".getContentPane();\n");
+                printUsingFrameAndCon(false, "Container " + getContainerName() + " = " + getFrameName() + ".getContentPane();\n");
             }
         }), gc);
 
@@ -148,7 +158,6 @@ public class ContainerCPanel extends CreatorPanel {
                       "//toegevoegd worden. "  );
             }
         }), gc);
-
 
 
     }

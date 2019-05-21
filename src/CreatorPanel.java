@@ -352,6 +352,25 @@ public abstract class CreatorPanel extends JPanel {
         this.panelName = panelName;
     }
 
+    public void addHelpButton(int x, int y, int weightY, String text)
+    {
+        GridBagConstraints gc = new GridBagConstraints();
+        gc.gridx = x;
+        gc.gridy = y;
+        gc.weighty = weightY;
+        gc.weightx = 0.2;
+        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        add(new JButton(new AbstractAction("Help") {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                printText(false , text);
+            }
+        }), gc);
+    }
+
+
+
     /* public void updateForm(String frameName, String containerName)
     {
         if (event == null)

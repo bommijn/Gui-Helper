@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 public class FrameCPanel extends CreatorPanel {
     private JComboBox<String> layoutList;
     private JButton layoutBut, makeFormBut, closeEventBut, packBut;
+    JTextField heightField, widthField;
 
 
     public FrameCPanel(FormListener formListener, PrintListener printListener)
@@ -16,8 +17,10 @@ public class FrameCPanel extends CreatorPanel {
         super.addFrameNameBut(0);
         super.addContainerInputBox(1);
         super.addOkButtonForInputFields(2);
-        addInfoLabel(10);
+        addInfoLabel(20);
 
+        heightField = new JTextField();
+        widthField = new JTextField();
 
 
         layoutList = new JComboBox<>();
@@ -97,7 +100,7 @@ public class FrameCPanel extends CreatorPanel {
                     switch (choseLayout)
                     {
                         case "BoxLayout":
-                            layout = "new BoxLayout()";
+                            layout = "new BoxLayout("+ getFrameName()+", **) // **add orientation in constructor";
                             break;
 
                         case "BorderLayout":
@@ -132,9 +135,7 @@ public class FrameCPanel extends CreatorPanel {
             }
         });
 
-        /*
-        PACK BUTTON !!!!!!!! NOT USED ATM !!!!!!!
-         */
+
         packBut = new JButton("4. pack");
         packBut.addActionListener(new ActionListener() {
             @Override
@@ -145,6 +146,25 @@ public class FrameCPanel extends CreatorPanel {
         });
 
         layoutComponents();
+        addHelpButton(0,12,6,"Frame Creator info: \n" +
+                "GRAB NAMES:\n" +
+                "Deze knop grabbed en set de names die ingegeven zijn in de velden boven de knop.\n\n" +
+                "MAKE FRAME:\n" +
+                "Deze knop maakt het frame, het frame gaat niet weergegeven worden als een globaal variable\n" +
+                "Om dat te bekomen moet je nog private JFrame *FRAMENAME*; vanboven in je class toevoegen.\n\n" +
+                "ADD CLOSE EVENT:\n" +
+                "Voegt een close event toe aan de frame\n\n" +
+                "SET LAYOUT:\n" +
+                "stelt de layout in met de gekozen layout.\n\n" +
+                "PACK:\n" +
+                "Packs? het frame zodat alles mooi op zijn plaats komt. dit lijntje code komt NA alles is toegevoegd aan de layout.\n\n" +
+                "SET VISIBLE:\n" +
+                "zet het frame visible. Deze methode moet altijd op het allerlaatse komen\n\n" +
+                "SET PREFERED SIZE : \n" +
+                "stelt de prefered size in met de parameters erboven meegegeven. \n\n" +
+                "EXIT METHODE:\n" +
+                "geeft u de exit methode die in je close event moet komen.\n\n" );
+
     }
 
 
@@ -213,6 +233,51 @@ public class FrameCPanel extends CreatorPanel {
             }
         }), gc);
 
+
+        gc.gridy ++;
+        gc.gridwidth = 1;
+        gc.fill = GridBagConstraints.HORIZONTAL;
+        gc.anchor = GridBagConstraints.LINE_START;
+        add(new JLabel("Frame Height:"), gc);
+
+        gc.gridx = 1;
+
+        gc.anchor = GridBagConstraints.LINE_END;
+        add(new JLabel("Frame Width:"), gc);
+
+        gc.gridx = 0;
+        gc.gridy++;
+        gc.gridwidth = 1;
+        gc.fill = GridBagConstraints.HORIZONTAL;
+        gc.anchor = GridBagConstraints.LINE_START;
+        add(heightField, gc);
+
+        gc.gridx = 1;
+        gc.anchor = GridBagConstraints.LINE_END;
+        add(widthField, gc);
+
+        gc.gridx = 0;
+        gc.gridy++;
+        gc.gridwidth = 2;
+        gc.fill = GridBagConstraints.NONE;
+        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        add(new JButton(new AbstractAction("Set preferred size") {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                try
+                {
+                    int height = new Integer(heightField.getText());
+                    int width = new Integer(widthField.getText());
+                    printUsingFrameName(true, getFrameName() + ".setPreferredSize(new Dimension("+width + "," + height + "));\n");
+
+                } catch (NumberFormatException n)
+                {
+                    addTextToInfoLabel("frame height or width can only accept numbers !! It also cant be empty, try again");
+                }
+            }
+        }), gc);
+
          /*
         9de rij
          */
@@ -225,26 +290,6 @@ public class FrameCPanel extends CreatorPanel {
                         "    {\n" +
                         "        System.exit(0);\n" +
                         "    }\n");
-            }
-        }), gc);
-
-
-         /*
-        10de rij
-         */
-        gc.weightx = 0.1;
-        gc.weighty = 15;
-        gc.anchor = GridBagConstraints.FIRST_LINE_START;
-        gc.gridy++;
-        add(new JButton(new AbstractAction("INFO") {
-            public void actionPerformed(ActionEvent e) {
-                printText(false, "Altijd starten met een Frame aan te maken,\n" +
-                        " daarna moet er een default close operation aan toe gevoegd worden\n" +
-                        "Je kan dit doen door de knop hier te gebruiken of door dit toe te voegen:\n\n" +
-                        "*FRAME NAME*.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); \n\n" +
-                        "De methode pack moet altijd onderaan komen achter alle dingen dat je toevoegd\n" +
-                        " en net voor de *FRAME NAME*.setVisable() methode\n" +
-                        "set visable is altijd het allerlaatse dat he uitvoerd.");
             }
         }), gc);
 
