@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 public class Toolbar extends JToolBar {
 
     private ToolbarListner toolbarListner;
-    private JButton jFrameBut, jPanelBut, jButtonBut, jtextFieldBut, jLabelBut, jTextAreaBut, containerBut;
+    private JButton jFrameBut, jPanelBut, jButtonBut, jtextFieldBut, jLabelBut, containerBut;
 
     public Toolbar()
     {
@@ -18,7 +18,7 @@ public class Toolbar extends JToolBar {
         jPanelBut = new JButton("JPanel");
         jButtonBut = new JButton("JButton");
         jtextFieldBut = new JButton("JTextField");
-        jTextAreaBut = new JButton("JTextArea");
+
         jLabelBut = new JButton("JLabel");
 
 
@@ -62,16 +62,7 @@ public class Toolbar extends JToolBar {
                     System.out.println("ToolbarListener not found !!!");
             }
         });
-        jTextAreaBut.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                if (toolbarListner != null)
-                    toolbarListner.showTextAreaMaker();
-                else
-                    System.out.println("ToolbarListener not found !!!");
-            }
-        });
+
         jLabelBut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -98,7 +89,7 @@ public class Toolbar extends JToolBar {
         add(jPanelBut);
         add(jButtonBut);
         add(jtextFieldBut);
-        add(jTextAreaBut);
+
         add(jLabelBut);
 
         setVisible(true);
