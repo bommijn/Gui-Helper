@@ -48,6 +48,8 @@ public class MainWindow extends JFrame {
                 remove(panelCPanel);
                 remove(textFieldCPanel);
                 remove(labelCPanel);
+                remove(utilCPanel);
+                remove(buttonCPanel);
 
                 add(frameCPanel, BorderLayout.WEST);
                 revalidate();
